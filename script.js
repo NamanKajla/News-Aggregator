@@ -1,67 +1,81 @@
-// Get references to the DOM elements
-const searchBox = document.getElementById("search");
+// API key and API URL
+const API_KEY = '5d4b338b-5ffe-435e-be9b-08fdb2869327';
+const API_URL = 'https://content.guardianapis.com/search?';
+
 const searchButton = document.getElementById("searchBtn");
+const searchInput = document.getElementById("search");
 const newsContainer = document.getElementById("news-container");
+const loadingSpinner = document.getElementById("loading-spinner");
 
-// Function to fetch news articles based on a search query
-async function fetchNews(query) {
-    const API_KEY = "cc085a0314644b7389aa35220bda4930"; // API key for News API
-    const url = `https://newsapi.org/v2/everything?q=${query}&apiKey=${API_KEY}`;
+// Event listener for search button
+searchButton.addEventListener("click", () => {
+  const query = searchInput.value.trim();
+  if (!query) {
+    alert("Please enter a keyword to search!");
+    return;
+  }
+  fetchNews(query);
+});
 
-    try {
-        // Fetch data from the API
-        const response = await fetch(url);
+// Function to fetch news
+function fetchNews(query) {
+  // Adding show-fields parameter to get thumbnails and body text
+  const url = `${API_URL}q=${query}&show-fields=thumbnail,bodyText&api-key=${API_KEY}`;
+  
+  showLoadingSpinner();
 
-        if (!response.ok) {
-            throw new Error(`API error: ${response.status}`); // Handle HTTP errors
-        }
-
-        const data = await response.json();
-        return data.articles; // Return the array of articles
-    } catch (error) {
-        console.error("Failed to fetch news:", error.message); // Log the error
-        return null; // Return null if an error occurs
-    }
-}
-
-// Function to display news articles in the news container
-function displayNews(articles) {
-    newsContainer.innerHTML = ""; // Clear the container before adding new articles
-
-    // If no articles are available or an error occurred, show a message
-    if (!articles || articles.length === 0) {
-        const errorMessage = document.createElement("div");
-        errorMessage.className = "no-news";
-        errorMessage.textContent = "Unable to fetch news. Please try again later.";
-        newsContainer.appendChild(errorMessage);
-        return;
-    }
-
-    // Loop through each article and create a card to display it
-    articles.forEach(article => {
-        const articleDiv = document.createElement("div"); // Create a div for the article
-        articleDiv.className = "article"; // Add a CSS class for styling
-        articleDiv.innerHTML = `
-            <h2>${article.title}</h2>
-            <p>${article.description || "No description available"}</p>
-            <a href="${article.url}" target="_blank">Read more</a>
-        `;
-        newsContainer.appendChild(articleDiv); // Add the article card to the container
+  fetch(url)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(data => {
+      hideLoadingSpinner();
+      displayNews(data.response.results);
+    })
+    .catch(error => {
+      console.error("Error fetching news:", error);
+      hideLoadingSpinner();
+      newsContainer.innerHTML = `<p class="placeholder">${error.message}</p>`;
     });
 }
 
-// Function to fetch and display news based on the search query
-async function getAndDisplayNews(query) {
-    const articles = await fetchNews(query); // Fetch articles
-    displayNews(articles); // Display articles or error message
+// Function to display news
+function displayNews(articles) {
+  newsContainer.innerHTML = "";
+
+  if (!articles || articles.length === 0) {
+    newsContainer.innerHTML = `<p class="placeholder">No news found for the given keyword.</p>`;
+    return;
+  }
+
+  articles.forEach(article => {
+    const newsCard = document.createElement("div");
+    newsCard.className = "news-card";
+
+    const thumbnail = article.fields.thumbnail 
+      ? `<img src="${article.fields.thumbnail}" alt="Article thumbnail">`
+      : '';
+
+    newsCard.innerHTML = `
+      ${thumbnail}
+      <h2>${article.webTitle}</h2>
+      <p>${article.fields.bodyText?.substring(0, 200) || "No description available."}...</p>
+      <a href="${article.webUrl}" target="_blank">Read more</a>
+    `;
+
+    newsContainer.appendChild(newsCard);
+  });
 }
 
-// Add a click event listener to the search button
-searchButton.addEventListener('click', () => {
-    const query = searchBox.value; // Get the value entered in the search box
+// Function to show loading spinner
+function showLoadingSpinner() {
+  loadingSpinner.classList.add("active");
+}
 
-    // If the query is not empty, fetch and display the news
-    if (query) {
-        getAndDisplayNews(query);
-    }
-});
+// Function to hide loading spinner
+function hideLoadingSpinner() {
+  loadingSpinner.classList.remove("active");
+}
