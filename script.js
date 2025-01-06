@@ -8,23 +8,32 @@ async function fetchNews(query) {
     const API_KEY = "cc085a0314644b7389aa35220bda4930"; // API key for News API
     const url = `https://newsapi.org/v2/everything?q=${query}&apiKey=${API_KEY}`;
 
-    // Fetch data from the API
-    const response = await fetch(url);
-    const data = await response.json();
+    try {
+        // Fetch data from the API
+        const response = await fetch(url);
 
-    return data.articles; // Return the array of articles
+        if (!response.ok) {
+            throw new Error(`API error: ${response.status}`); // Handle HTTP errors
+        }
+
+        const data = await response.json();
+        return data.articles; // Return the array of articles
+    } catch (error) {
+        console.error("Failed to fetch news:", error.message); // Log the error
+        return null; // Return null if an error occurs
+    }
 }
 
 // Function to display news articles in the news container
 function displayNews(articles) {
     newsContainer.innerHTML = ""; // Clear the container before adding new articles
 
-    // If no articles are available, show a message
-    if (articles.length === 0) {
-        const noNewsMessage = document.createElement("div");
-        noNewsMessage.className = "no-news";
-        noNewsMessage.textContent = "No news available for the given search term.";
-        newsContainer.appendChild(noNewsMessage);
+    // If no articles are available or an error occurred, show a message
+    if (!articles || articles.length === 0) {
+        const errorMessage = document.createElement("div");
+        errorMessage.className = "no-news";
+        errorMessage.textContent = "Unable to fetch news. Please try again later.";
+        newsContainer.appendChild(errorMessage);
         return;
     }
 
@@ -44,7 +53,7 @@ function displayNews(articles) {
 // Function to fetch and display news based on the search query
 async function getAndDisplayNews(query) {
     const articles = await fetchNews(query); // Fetch articles
-    displayNews(articles); // Display articles
+    displayNews(articles); // Display articles or error message
 }
 
 // Add a click event listener to the search button
