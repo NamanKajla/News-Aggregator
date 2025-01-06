@@ -7,8 +7,8 @@
 body {
   font-family: 'Roboto', sans-serif;
   line-height: 1.6;
-  background-color: #333c44;
-  color: #f0f0f0;
+  background-color: #1c1f22; /* Darker background */
+  color: #e1e1e1; /* Lighter text */
 }
 
 .container {
@@ -18,7 +18,7 @@ body {
 }
 
 header {
-  background: linear-gradient(135deg, #2c6e49, #1c4d2f);
+  background: linear-gradient(135deg, #4b5156, #2e3336); /* Darker greenish-blue gradient */
   color: white;
   padding: 2rem 0;
   box-shadow: 0 2px 5px rgba(0,0,0,0.3);
@@ -44,14 +44,14 @@ header h1 {
   border: none;
   border-radius: 25px;
   font-size: 1rem;
-  background-color: #4a5b61;
+  background-color: #3a4346; /* Slightly darker background for input */
   color: white;
   box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
 #searchBtn {
   padding: 12px 30px;
-  background-color: #ff7043;
+  background-color: #ff5722; /* Lively orange for the button */
   color: white;
   border: none;
   border-radius: 25px;
@@ -62,7 +62,7 @@ header h1 {
 }
 
 #searchBtn:hover {
-  background-color: #f4511e;
+  background-color: #e64a19; /* Darker orange on hover */
 }
 
 main {
@@ -70,7 +70,7 @@ main {
 }
 
 .news-card {
-  background: #444c53;
+  background: #2c353b; /* Darker background for the news card */
   border-radius: 10px;
   padding: 20px;
   margin-bottom: 20px;
@@ -91,21 +91,20 @@ main {
 }
 
 .news-card h2 {
-  color: #81c784;
+  color: #ffeb3b; /* Bright yellow for titles */
   margin-bottom: 1rem;
   font-size: 1.5rem;
 }
 
-
 .news-card p {
-  color: #b0bec5;
+  color: #b0bec5; /* Lighter gray for text */
   margin-bottom: 1rem;
 }
 
 .news-card a {
   display: inline-block;
   padding: 8px 20px;
-  background-color: #388e3c;
+  background-color: #607d8b; /* Cool, muted blue for the link */
   color: white;
   text-decoration: none;
   border-radius: 20px;
@@ -113,7 +112,7 @@ main {
 }
 
 .news-card a:hover {
-  background-color: #2c6e49;
+  background-color: #455a64; /* Darker blue for hover effect */
 }
 
 #loading-spinner {
@@ -121,7 +120,7 @@ main {
   width: 50px;
   height: 50px;
   border: 5px solid #f3f3f3;
-  border-top: 5px solid #2c6e49;
+  border-top: 5px solid #ff5722;
   border-radius: 50%;
   margin: 20px auto;
   animation: spin 1s linear infinite;
