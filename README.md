@@ -2,8 +2,6 @@
 
 # HealthMan - Fitness Exercise Planner
 
-![HealthMan Banner](https://raw.githubusercontent.com/NamanKajla/HealthMan/main/assets/banner.png)
-
 A modern, responsive web application that generates personalized fitness and exercise plans based on individual metrics, goals, and current fitness levels. Features a sleek dark/light theme and provides BMI calculations with customized workout recommendations.It also uses **local storage** to store user preferences and history for a seamless experience.
 
 ## 🌟 Features
