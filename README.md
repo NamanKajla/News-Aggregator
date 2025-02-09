@@ -21,7 +21,7 @@ A modern, responsive web application that generates personalized fitness and exe
 
 ## 🖥️ Demo
 
-Live Demo: [HealthMan Fitness Planner](https://healthman-frontend.vercel.app/)
+Live Demo: https://healthman.netlify.app/
 
 ## ⚙️ Tech Stack
 
