@@ -1,5 +1,3 @@
-
-
 # HealthMan - Fitness Exercise Planner
 
 A modern, responsive web application that generates personalized fitness and exercise plans based on individual metrics, goals, and current fitness levels. Features a sleek dark/light theme and provides BMI calculations with customized workout recommendations.It also uses **local storage** to store user preferences and history for a seamless experience.
@@ -100,7 +98,7 @@ Request Body: {
    ### 1. Gemini API (AI-based recommendations)
    - Requires an API key.
    - Used to generate personalized fitness insights.
-   - 
+     
    ### 2. Fitness API (Exercise & Diet Data)
    - Fetches exercise videos and diet plans.
 
